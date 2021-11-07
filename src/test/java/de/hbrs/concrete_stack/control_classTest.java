@@ -9,8 +9,7 @@ import de.hbrs.concrete_stack.control.EvaluationRecord;
 import de.hbrs.concrete_stack.control.SalesMan;
 import de.hbrs.concrete_stack.control.control_class;
 import org.bson.Document;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
 
@@ -18,6 +17,7 @@ import static com.mongodb.client.model.Filters.eq;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class control_classTest {
 
     private SalesMan salesman01;
@@ -43,6 +43,7 @@ class control_classTest {
     }
 
     @Test
+    @Order(11)
     void addEvaluationRecordInsertsPerformanceRecordToDB() {
         long beforeSize = getCountOfPerformanceRecords(record01.getYear());
         control.addEvaluationRecord(record01, salesman01.getEmployeeId());
@@ -54,6 +55,7 @@ class control_classTest {
 
 
     @Test
+    @Order(12)
     void readEvaluationRecordsReadsOnly() {
         control.addEvaluationRecord(record01, salesman01.getEmployeeId());
         assumeTrue(performanceRecords.find(eq("employee_id", salesman01.getEmployeeId())) != null,
@@ -70,6 +72,18 @@ class control_classTest {
     }
 
     @Test
+    @Order(13)
+    void deleteEvaluationRecordDeletesSomething () {
+        control.addEvaluationRecord(record01, salesman01.getEmployeeId());
+        long beforeSize = this.getCountOfPerformanceRecords(record01.getYear());
+        control.deleteEvaluationRecord(salesman01.getEmployeeId(), record01.getYear());
+        long afterSize = this.getCountOfPerformanceRecords(record01.getYear());
+        assertEquals(beforeSize - 1, afterSize);
+        performanceRecords.deleteMany(eq("year", record01.getYear()));
+    }
+
+    @Test
+    @Order(1)
     void addSalesman(){
         long beforeSize = salesman.count();
         control.createSalesMan(salesman01);
@@ -79,6 +93,7 @@ class control_classTest {
     }
 
     @Test
+    @Order(2)
     void readSalesman(){
         salesman.insertOne(new Document("employee_id", salesman01.getEmployeeId())
                 .append("firstname", salesman01.getFirstName())
@@ -92,7 +107,8 @@ class control_classTest {
     }
 
     @Test
-    void deleteSalesman(){
+    @Order(3)
+    void deleteSalesmanOnlyDeletesOne(){
         salesman.insertOne(new Document("employee_id", salesman01.getEmployeeId()));
         long beforeSize = salesman.count();
         control.deleteSalesMan(salesman01.getEmployeeId());
@@ -104,13 +120,13 @@ class control_classTest {
     }
 
     @Test
- /*   void addPerformanceRecordClosesConnection() {
+    @Disabled
+    void addPerformanceRecordClosesConnection() {
         assertFalse(control.isConnected(), "connection was not closed before Test");
         control.addEvaluationRecord(record01, salesman01.getEmployeeId());
         assertFalse(control.isConnected(), "addPerformanceRecord does not close the connection");
         performanceRecords.deleteMany(eq("year", record01.getYear()));
     }
-*/
 
     //****************************//
 

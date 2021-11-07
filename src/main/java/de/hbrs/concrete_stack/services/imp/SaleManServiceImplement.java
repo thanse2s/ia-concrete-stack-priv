@@ -28,13 +28,13 @@ public class SaleManServiceImplement implements SalesManService {
     }
 
     @Override
-    public List<SalesMan> findAll() {
+    public List<SalesMan> readAll() {
         salesMans = control.querySalesMan("employeeId", "");
         return salesMans;
     }
 
     @Override
-    public SalesMan getSinge(long id) {
+    public SalesMan read(long id) {
         return control.readSalesMan((int)id);
     }
 
@@ -52,16 +52,16 @@ public class SaleManServiceImplement implements SalesManService {
     @Override
     public boolean update(long id, SalesMan salesMan) {
         try{
-                SalesMan tmp = control.readSalesMan((int)id);
-                if(!tmp.getFirstName().equals(salesMan.getFirstName())) {
+            SalesMan tmp = control.readSalesMan((int)id);
+            if(!tmp.getFirstName().equals(salesMan.getFirstName())) {
                 control.changeSalesMan((int) id, "firstname", salesMan.getFirstName());
-                }
-                if(!tmp.getFirstName().equals(salesMan.getFirstName())) {
+            }
+            if(!tmp.getFirstName().equals(salesMan.getFirstName())) {
                 control.changeSalesMan((int) id, "lastname", salesMan.getFirstName());
-                }
-                if(!tmp.getFirstName().equals(salesMan.getFirstName())) {
+            }
+            if(!tmp.getFirstName().equals(salesMan.getFirstName())) {
                 control.changeSalesMan((int) id, "department", salesMan.getFirstName());
-                }
+            }
 
         }catch(Exception e)
         {

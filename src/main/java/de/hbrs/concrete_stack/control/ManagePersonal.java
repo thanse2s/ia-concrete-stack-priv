@@ -14,8 +14,11 @@ public interface ManagePersonal {
 
     public EvaluationRecord readEvaluationRecords(int sid, int year);   //Read (R)
 
-    public void deleteSalesMan(int sid);
+    public void deleteSalesMan(int sid);    //Delete (D)
 
-    public void changeSalesMan(int sid, String attribute, String value);
+    public boolean deleteEvaluationRecord(int employeeId, int year);    //Delete (D)
 
+    public void changeSalesMan(int sid, String attribute, String value);    //Update (U)
+
+    public boolean updateEvaluationRecord(EvaluationRecord record, int employeeId); //Update (U)
 }

@@ -1,4 +1,4 @@
-package de.hbrs.concrete_stack.springboot;
+package de.hbrs.concrete_stack.springboot_controller;
 
 import de.hbrs.concrete_stack.control.ManagePersonal;
 import de.hbrs.concrete_stack.control.SalesMan;
@@ -7,8 +7,6 @@ import de.hbrs.concrete_stack.services.SalesManService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -18,25 +16,25 @@ public class SalesmanController {
     ManagePersonal control = new control_class();
 
     @Autowired
-    private SalesManService salenanService;
+    private SalesManService salesManService;
 
     @GetMapping
     public List<SalesMan> s1(){
-        return salenanService.findAll();
+        return salesManService.readAll();
     }
 
     @GetMapping("/{id}")
-    public SalesMan getSingleSalesman(@PathVariable(required = true) long id){return salenanService.getSinge(id);}
+    public SalesMan getSingleSalesman(@PathVariable(required = true) long id){return salesManService.read(id);}
 
     @PostMapping
     public void createPerson(@RequestBody(required = true) SalesMan salesMan){
-        salenanService.create(salesMan);
+        salesManService.create(salesMan);
     }
 
     @PutMapping("/{id}")
     public void updateSalesMan(@PathVariable(required = true) long id,
                                @RequestBody(required = true) SalesMan salesMan){
-        salenanService.update(id,salesMan);
+        salesManService.update(id,salesMan);
     }
 
     @DeleteMapping("/{id}")

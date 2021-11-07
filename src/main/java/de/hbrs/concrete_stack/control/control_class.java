@@ -71,7 +71,7 @@ public class control_class implements ManagePersonal {
         connected = false;
     }
     // For Testing
-    protected boolean isConnected() {
+    public boolean isConnected() {
         return connected;
     }
 
@@ -129,7 +129,7 @@ public class control_class implements ManagePersonal {
                     addToSet("social_performance", socialPerformance));
         });
         record.getOrderEvaluations().forEach(x -> {
-            Document ordersEvaluation = new Document("name_od_product", x.getNameOfProduct())
+            Document ordersEvaluation = new Document("name_of_product", x.getNameOfProduct())
                     .append("employee_id", employeeId)
                     .append("client", x.getClient())
                     .append("client_ranking", x.getClientRanking())
@@ -157,6 +157,35 @@ public class control_class implements ManagePersonal {
                 .forEach(x -> result.addNewSocialPerformance(x));
         this.disconnectAndClose();
         return result;
+    }
+
+    /*
+     * Deletes an EvaluationRecord form the performance_records Collection. Returns True if successfull.
+     */
+    public boolean deleteEvaluationRecord(int employeeId, int year) {
+        this.connectAndOpen();
+        performanceRecords.updateMany(eq("year", year), pull("orders_evaluation", eq("employee_id", employeeId)));
+        performanceRecords.updateMany(eq("year", year), pull("social_performance", eq("employee_id", employeeId)));
+        // Check if it is an empty year
+        Document found = performanceRecords.find(eq("year", year)).first();
+        if (found == null) {
+            this.disconnectAndClose();
+            return false;
+        }
+        if (((ArrayList<Document>)found.get("orders_evaluation")).isEmpty() &&
+                ((ArrayList<Document>)found.get("social_performance")).isEmpty())
+            performanceRecords.deleteMany(eq("year", year));
+        this.disconnectAndClose();
+        return true;
+    }
+
+    /*
+     * Updates the EvaluationRecord of a given employeeId to the given record.
+     */
+    public boolean updateEvaluationRecord(EvaluationRecord record, int employeeId) {
+        this.deleteEvaluationRecord(employeeId, record.getYear());
+        this.addEvaluationRecord(record, employeeId);
+        return true;
     }
 
     /*
