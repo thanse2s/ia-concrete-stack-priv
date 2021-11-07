@@ -1,5 +1,7 @@
 package de.hbrs.concrete_stack.control;
 
+import org.bson.conversions.Bson;
+
 import java.util.List;
 
 public interface ManagePersonal {
@@ -21,4 +23,6 @@ public interface ManagePersonal {
     public void changeSalesMan(int sid, String attribute, String value);    //Update (U)
 
     public boolean updateEvaluationRecord(EvaluationRecord record, int employeeId); //Update (U)
+
+    List<SalesMan> querySalesMan(Bson employ_id);
 }

@@ -1,7 +1,6 @@
 de\hbrs\concrete_stack\control\ManagePersonal.class
 de\hbrs\concrete_stack\control\control_class.class
 de\hbrs\concrete_stack\control\SalesMan.class
-de\hbrs\concrete_stack\springboot\webApplication.class
 de\hbrs\concrete_stack\CmdDisplay.class
 de\hbrs\concrete_stack\control\EvaluationRecord$OrdersEvaluation.class
 de\hbrs\concrete_stack\control\EvaluationRecord$SocialPerformance.class

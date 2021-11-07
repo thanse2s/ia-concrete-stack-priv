@@ -19,6 +19,8 @@ import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Updates.*;
 
 import com.mongodb.client.FindIterable;
+import org.bson.conversions.Bson;
+
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -193,15 +195,21 @@ public class control_class implements ManagePersonal {
      * Salesman Objects.
      */
     public List<SalesMan> querySalesMan(String attribute , String key ) {
+        return querySalesMan(eq(attribute, key));
+    }
+    public List<SalesMan> querySalesMan(Bson filter) {
         this.connectAndOpen();
         List<SalesMan> result = new ArrayList<SalesMan>();
-        FindIterable<Document> findIterable = salesman.find(eq(attribute, key));
+        FindIterable<Document> findIterable = salesman.find(filter);
         for (Document doc : findIterable) {
             result.add(documentToSalesMan(doc));
         }
         this.disconnectAndClose();
         return result.isEmpty() ? null : result;
     }
+
+
+
 
     /*
      * Deletes the SalesMan with the given employeeId.

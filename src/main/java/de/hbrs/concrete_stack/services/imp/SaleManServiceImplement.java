@@ -10,10 +10,12 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mongodb.client.model.Filters.exists;
+
 @Service
 public class SaleManServiceImplement implements SalesManService {
 
-    List<SalesMan> salesMans = new ArrayList<>();
+
     ManagePersonal control = new control_class();
 
     @PostConstruct
@@ -23,14 +25,12 @@ public class SaleManServiceImplement implements SalesManService {
         s1.setFirstname("Tobias");
         s1.setLastname("Hansen");
         s1.setdepartment("JUnit");
-        salesMans.add(s1);
         control.createSalesMan(s1);
     }
 
     @Override
     public List<SalesMan> readAll() {
-        salesMans = control.querySalesMan("employeeId", "");
-        return salesMans;
+        return control.querySalesMan(exists("employ_id"));
     }
 
     @Override

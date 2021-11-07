@@ -1,8 +1,11 @@
 package de.hbrs.concrete_stack;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
+@EnableSwagger2
+
 public class SpringApplication {
 
     public static void main (String[] args){
