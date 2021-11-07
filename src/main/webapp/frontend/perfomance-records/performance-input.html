@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Performance Record</title>
+    <link rel="stylesheet" href="/ia-concrete-stack/src/main/webapp/frontend/salesman/salesman-input.css">
+</head>
+<body>
+<header>
+    <h1>Performance Record</h1>
+</header>
+
+<section class="container">
+    <form id="standard-form">
+        <div>
+            <label for="employeeid">Employee ID:</label>
+            <input type="text" id="employeeid">
+        </div>
+        <div>
+            <label for="goalid">Goal ID:</label>
+            <input type="text" id="goalid">
+        </div>
+        <div>
+            <label for="companyname">Company Name:</label>
+            <input type="text" id="companyname">
+        </div>
+        <div>
+            <label for="targetvalue">Target Value:</label>
+            <input type="number" id="targetvalue">
+        </div>
+        <div>
+            <label for="actualvalue">Actual Value:</label>
+            <input type="number" id="actualvalue">
+        </div>
+        <div class="msg"></div>
+        <input class="btn" type="submit" value="Submit">
+    </form>
+
+    <ul id="recordlist"></ul>
+
+</section>
+<script src="performance-input.js"></script>
+</body>
+</html>
